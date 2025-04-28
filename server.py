@@ -12,7 +12,14 @@ def index():
 @app.route("/emotionDetector")
 def emotion_detection():
     text = request.args["textToAnalyze"]
+    if not text:
+        return "Invalid text! Please try again!.", 200
+
     results = emotion_detector(text)
+    dominant_emotion = results["dominant_emotion"]
+    
+    if not dominant_emotion:
+        return "Invalid text! Please try again!.", 200
 
     response = "For the given statement, the system response is "    
 
@@ -24,7 +31,7 @@ def emotion_detection():
         else:
             response += f"and '{key}': {value}.\n"
 
-    dominant_emotion = results["dominant_emotion"]
+    
     response += f"The dominant emotion is {dominant_emotion}."
 
     return response, 200
