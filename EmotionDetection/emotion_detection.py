@@ -8,9 +8,6 @@ def emotion_detector(text_to_analyze) -> dict:
     headers = __build_headers()
     response = requests.post(EMOTION_DETECTOR_URL, headers=headers, json=body)
 
-    if response.status_code == 400:
-        return __default_dict()
-
     result = response.json()
 
     emotions = result["emotionPredictions"][0]["emotion"]
